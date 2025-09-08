@@ -1,0 +1,89 @@
+{% extends "layout/main.html" %} {% block title %}Skills — {{
+config['SITE_NAME'] }}{% endblock %} {% block description %}Uchenna's skills in
+AI, data analysis, embedded systems, Python, and web development, showcased
+through projects and utilities.{% endblock %} {% block og_title %}Skills — {{
+config['SITE_NAME'] }}{% endblock %} {% block og_description %}Explore Uchenna's
+expertise in AI, embedded systems, and web development, powering innovative
+projects.{% endblock %} {% block twitter_title %}Skills — {{ config['SITE_NAME']
+}}{% endblock %} {% block twitter_description %}Uchenna's skill set in AI, data,
+and embedded systems, driving collaborative tech solutions.{% endblock %} {%
+block extra_head %}
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Skills",
+    "description": "Uchenna's technical skills in AI, data analysis, embedded systems, and web development.",
+    "url": "{{ config['BASE_URL'] }}/skills"
+  }
+</script>
+{% endblock %} {% block content %}
+<section
+  class="container mx-auto px-4 py-8"
+  role="region"
+  aria-labelledby="skills-title"
+>
+  <h1
+    id="skills-title"
+    class="text-3xl md:text-4xl font-bold font-[var(--font-heading)] text-[var(--color-fg)] mb-6"
+  >
+    Skills
+  </h1>
+  <p class="prose prose-invert text-[var(--color-fg-secondary)] mb-6">
+    My skills reflect my passion for building collaborative tech solutions, from
+    AI-driven data analysis to hardware automation.
+  </p>
+
+  <div class="grid gap-6 md:grid-cols-2">
+    <article
+      class="bg-[var(--color-bg-secondary)] p-4 rounded-[var(--border-radius)] border border-[var(--color-border)]"
+    >
+      <h2 class="text-xl font-[var(--font-heading)] mb-3">Data & AI</h2>
+      <ul class="list-disc pl-6 text-[var(--color-fg-secondary)]">
+        <li>Data Analysis & Visualization (Pandas, NumPy)</li>
+        <li>Machine Learning (Classification, Pattern Recognition)</li>
+        <li>
+          API Integration (<code>/api/news</code>, <code>/api/weather</code>)
+        </li>
+      </ul>
+    </article>
+    <article
+      class="bg-[var(--color-bg-secondary)] p-4 rounded-[var(--border-radius)] border border-[var(--color-border)]"
+    >
+      <h2 class="text-xl font-[var(--font-heading)] mb-3">Embedded Systems</h2>
+      <ul class="list-disc pl-6 text-[var(--color-fg-secondary)]">
+        <li>Raspberry Pi & Arduino Prototyping</li>
+        <li>Smart Sensors & Robotics</li>
+        <li>C/C++ for Hardware</li>
+      </ul>
+    </article>
+    <article
+      class="bg-[var(--color-bg-secondary)] p-4 rounded-[var(--border-radius)] border border-[var(--color-border)]"
+    >
+      <h2 class="text-xl font-[var(--font-heading)] mb-3">Web Development</h2>
+      <ul class="list-disc pl-6 text-[var(--color-fg-secondary)]">
+        <li>
+          Flask & Jinja2 (Portfolio,
+          <a href="{{ url_for('pages.about') }}" class="link">About</a>,
+          <a href="{{ url_for('pages.projects') }}" class="link">Projects</a>)
+        </li>
+        <li>JavaScript (Puzzle Game, Theme Toggle)</li>
+        <li>Asset Optimization (<code>scripts/optimize_images.py</code>)</li>
+      </ul>
+    </article>
+    <article
+      class="bg-[var(--color-bg-secondary)] p-4 rounded-[var(--border-radius)] border border-[var(--color-border)]"
+    >
+      <h2 class="text-xl font-[var(--font-heading)] mb-3">Other</h2>
+      <ul class="list-disc pl-6 text-[var(--color-fg-secondary)]">
+        <li>Blockchain Basics</li>
+        <li>
+          Python Scripting (<code>build_feeds.py</code>,
+          <code>validate_content.py</code>)
+        </li>
+        <li>Git & CI/CD (<code>.github/workflows/ci.yml</code>)</li>
+      </ul>
+    </article>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,243 @@
+{# app/templates/base.html #}
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+  <head>
+    <!-- Essentials -->
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <meta name="color-scheme" content="dark light" />
+
+    <!-- Core Metadata -->
+    <title>
+      {% block title %}TheWebBaby — Uchenna's Portfolio{% endblock %}
+    </title>
+    <meta
+      name="description"
+      content="{% block description %}Uchenna's portfolio showcasing expertise in AI, data analysis, embedded systems, and collaborative tech solutions.{% endblock %}"
+    />
+    <meta
+      name="keywords"
+      content="Uchenna, TheWebBaby, Computer Science, AI, Data Analysis, Embedded Systems, Raspberry Pi, Arduino, Automation, Python, Blockchain"
+    />
+    <meta name="author" content="Uchenna" />
+
+    <!-- Canonical & RSS -->
+    <link rel="canonical" href="{{ config['BASE_URL'] }}{{ request.path }}" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title="TheWebBaby — Webbabyguard News"
+      href="{{ url_for('api.api_rss') }}"
+    />
+
+    <!-- Favicons & PWA -->
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="{{ url_for('static', filename='img/favicons/favicon.ico') }}"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="{{ url_for('static', filename='img/favicons/apple-touch-icon.png') }}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="{{ url_for('static', filename='img/favicons/favicon-32x32.png') }}"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="{{ url_for('static', filename='img/favicons/favicon-16x16.png') }}"
+    />
+    <link
+      rel="manifest"
+      href="{{ url_for('static', filename='manifest.json') }}"
+    />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: light)"
+      content="#f0f4ff"
+    />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: dark)"
+      content="#0a0e1a"
+    />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <meta name="apple-mobile-web-app-title" content="TheWebBaby" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <!-- OpenGraph -->
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="{% block og_title %}TheWebBaby — Uchenna's Portfolio{% endblock %}"
+    />
+    <meta
+      property="og:description"
+      content="{% block og_description %}Explore Uchenna's work in AI, data analysis, embedded systems, and innovative tech solutions.{% endblock %}"
+    />
+    <meta
+      property="og:url"
+      content="{{ config['BASE_URL'] }}{{ request.path }}"
+    />
+    <meta property="og:site_name" content="TheWebBaby" />
+    <meta
+      property="og:image"
+      content="{{ url_for('static', filename='img/social/og-default.png') }}"
+    />
+    <meta property="og:image:alt" content="TheWebBaby Portfolio Preview" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="{% block twitter_title %}TheWebBaby — Uchenna's Portfolio{% endblock %}"
+    />
+    <meta
+      name="twitter:description"
+      content="{% block twitter_description %}Uchenna's journey in Computer Science, AI, embedded systems, and collaborative technology.{% endblock %}"
+    />
+    <meta
+      name="twitter:image"
+      content="{{ url_for('static', filename='img/social/og-default.png') }}"
+    />
+    <!-- Removed twitter:creator placeholder to avoid invalid metadata -->
+
+    <!-- SEO & Privacy -->
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="language" content="en" />
+    <meta name="rating" content="General" />
+
+    <!-- Performance Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="//fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="//fonts.gstatic.com" />
+    <link rel="dns-prefetch" href="//openweathermap.org" />
+    <link
+      rel="preload"
+      href="{{ url_for('static', filename='css/tokens.css') }}"
+      as="style"
+    />
+    <link
+      rel="preload"
+      href="{{ url_for('static', filename='js/app.js') }}"
+      as="script"
+    />
+
+    <!-- Fonts (variable Inter + Orbitron) -->
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Orbitron:wght@400;700&display=swap"
+    />
+
+    <!-- Core CSS -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/tokens.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/base.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/layout.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/components.css') }}"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/print.css') }}"
+      media="print"
+    />
+
+    {% block extra_head %}{% endblock %}
+
+    <!-- Structured Data -->
+    {% block structured_data %}
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "TheWebBaby",
+        "url": "{{ config['BASE_URL'] }}",
+        "description": "Portfolio of Uchenna, a Computer Scientist specializing in AI, data analysis, and embedded systems.",
+        "publisher": {
+          "@type": "Person",
+          "name": "Uchenna"
+        },
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "{{ config['BASE_URL'] }}/search?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      }
+    </script>
+    {% endblock %}
+  </head>
+
+  <body class="site-body particles" data-theme="dark">
+    <noscript>
+      <div
+        role="alert"
+        style="
+          background: #fffbcc;
+          color: #111;
+          padding: 16px;
+          text-align: center;
+          font-family: Inter, sans-serif;
+        "
+      >
+        JavaScript is disabled. Enable it to experience interactive features
+        like the puzzle game, theme toggle, and live weather updates.
+      </div>
+    </noscript>
+
+    <!-- Cookie Consent Banner -->
+    {% include 'components/cookie_notice.html' %}
+
+    <!-- Navigation -->
+    {% include 'components/nav.html' %} {% block body_start %}{% endblock %}
+
+    <!-- Main Content -->
+    <main id="main-content" class="container" role="main">
+      {% block main %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    {% include 'components/footer.html' %} {% block body_end %}{% endblock %}
+
+    <!-- Core JS -->
+    <script defer src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/theme.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/metrics.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/effects.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/weather.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/news.js') }}"></script>
+    <script defer src="{{ url_for('static', filename='js/puzzle.js') }}"></script>
+
+    <!-- Initialize JS -->
+    <script>
+      document.documentElement.classList.remove("no-js");
+    </script>
+
+    {% block extra_js %}{% endblock %}
+  </body>
+</html>

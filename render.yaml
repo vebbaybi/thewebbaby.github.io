@@ -1,0 +1,35 @@
+services:
+  - type: web
+    name: thewebbaby
+    env: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn wsgi:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.6  # Use a specific version that matches your local environment
+      - key: SECRET_KEY
+        generateValue: true  # Let Render generate a secure secret key
+      - key: SITE_NAME
+        value: thewebbaby
+      - key: BASE_URL
+        value: https://thewebbaby.onrender.com
+      - key: NEWS_PAGE_SIZE
+        value: "12"
+      - key: API_CACHE_TTL
+        value: "300"
+      - key: WEATHER_CACHE_TTL
+        value: "300"
+      - key: WB_LAT
+        value: "43.6532"
+      - key: WB_LON
+        value: "-79.3832"
+      # Add your weather API key in Render's dashboard after creating the service
+      # - key: WEATHER_API_KEY
+      #   value: your-actual-api-key-here
+
+cronJobs:
+  - name: build-feeds-hourly
+    schedule: "0 * * * *"  # hourly at minute 0
+    buildCommand: pip install -r requirements.txt
+    runCommand: python scripts/build_feeds.py

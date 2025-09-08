@@ -1,0 +1,103 @@
+/* Container: Centralized content with responsive padding */
+.container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 clamp(1rem, 3vw, 2rem);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Grid System: Flexible, responsive grid with advanced features */
+.grid {
+    display: grid;
+    gap: clamp(1.5rem, 3vw, 2rem);
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    align-items: start;
+}
+
+/* Grid Variants: Specific column layouts */
+.grid-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.grid-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.grid-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+
+    .grid-2,
+    .grid-3,
+    .grid-4 {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 1rem;
+    }
+
+    .grid {
+        gap: 1rem;
+    }
+
+    .grid-2,
+    .grid-3,
+    .grid-4 {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Advanced Grid Features */
+.grid-auto-flow {
+    grid-auto-flow: dense;
+}
+
+.grid-span-2 {
+    grid-column: span 2;
+}
+
+.grid-span-3 {
+    grid-column: span 3;
+}
+
+.grid-span-4 {
+    grid-column: span 4;
+}
+
+/* Accessibility and Performance Enhancements */
+.grid {
+    will-change: transform;
+    transition: gap 0.3s ease-out;
+}
+
+/* High-Density Displays */
+@media (min-resolution: 2dppx) {
+    .container {
+        padding: 0 clamp(1.25rem, 2.5vw, 1.75rem);
+    }
+}
+
+/* Print Styles */
+@media print {
+    .container {
+        max-width: 100%;
+        padding: 0 1cm;
+    }
+
+    .grid {
+        gap: 1cm;
+    }
+
+    .grid-2,
+    .grid-3,
+    .grid-4 {
+        grid-template-columns: 1fr;
+    }
+}

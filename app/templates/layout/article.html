@@ -1,0 +1,10 @@
+{# app/templates/layout/article.html #} {% extends "base.html" %} {% block
+body_start %} {% endblock %} {% block main %}
+<main
+  id="main-content"
+  class="article-main prose prose-invert max-w-3xl mx-auto px-4 md:px-6 lg:px-8 py-8"
+>
+  {% block content %}{% endblock %}
+</main>
+{% endblock %} {% block body_end %} {% include "components/cookie_notice.html"
+%} {% endblock %}

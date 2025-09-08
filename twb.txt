@@ -1,0 +1,144 @@
+thewebbaby/
+├── README.md              # project overview and instructions
+├── LICENSE                # license file
+├── .gitignore             # ignored files (venv, .env, __pycache__, etc.)
+├── requirements.txt       # Python dependencies (Flask, Jinja2, etc.)
+├── wsgi.py                # WSGI entrypoint for Render (gunicorn loads app)
+├── render.yaml            # Render deployment config (web service + cron)
+├── .env.example           # example environment variables (safe template)
+├── aboutme.txt            # plain text About Me content (no markup)
+│
+├── data/                  # runtime + content files
+│   ├── news.json              # generated news feed (via cron)
+│   ├── weather_snapshot.json  # cached weather info
+│   ├── bulletins.yaml         # your project bulletins (Webbabyguard news)
+│   └── playme/                # sliding puzzle assets
+│       ├── manifest.json      # puzzle image metadata
+│       ├── playme1.jpg        # puzzle image 1
+│       ├── playme2.jpg        # puzzle image 2
+│       ├── playme3.webp       # puzzle image 3
+│       ├── playme4.jpg        # puzzle image 4
+│       ├── playme5.jpg        # puzzle image 5
+│       ├── playme6.jpg        # puzzle image 6
+│       ├── playme7.webp       # puzzle image 7
+│       ├── playme8.jpg        # puzzle image 8
+│       ├── playme9.webp       # puzzle image 9
+│       ├── playme10.webp      # puzzle image 10
+│       ├── playme11.jpg       # puzzle image 11
+│       ├── playme12.webp      # puzzle image 12 (webp)
+│       ├── playme12.jpg       # puzzle image 12 (jpg duplicate)
+│       └── playme14.webp      # puzzle image 14
+│
+├── scripts/               # operational + cron scripts
+│   ├── build_feeds.py     # fetch RSS + weather, update news.json + rss.xml
+│   ├── optimize_images.py # compress/convert images (puzzle, mascots, etc.)
+│   └── validate_content.py# lint bulletins.yaml + validate schemas
+│
+├── app/                   # main Flask application
+│   ├── __init__.py        # app factory: creates Flask app, registers routes
+│   ├── config.py          # centralized app config (env vars, defaults)
+│   │
+│   ├── routes/            # Flask blueprints (URL endpoints)
+│   │   ├── __init__.py    # import & register routes
+│   │   ├── pages.py       # home, about, projects, skills, resume, contact
+│   │   ├── webbabyguard.py# Webbabyguard news feed page
+│   │   ├── puzzle.py      # puzzle game page
+│   │   ├── api.py         # JSON APIs (news, weather, rss, theme, health)
+│   │   └── assets.py      # robots.txt, sitemap.xml, favicon routing
+│   │
+│   ├── services/          # backend logic (pure Python, testable)
+│   │   ├── rss_ingest.py  # fetch + normalize RSS feeds
+│   │   ├── rss_build.py   # build rss.xml from feeds + bulletins
+│   │   ├── weather.py     # fetch + format weather data
+│   │   ├── cache.py       # ETag + Last-Modified helpers
+│   │   ├── content.py     # sanitize + render bulletins
+│   │   ├── schema.py      # JSON schemas for news, weather, bulletins
+│   │   └── metrics.py     # counters + /health data snapshot
+│   │
+│   ├── templates/         # Jinja2 templates
+│   │   ├── base.html      # global base template (head, assets, layout)
+│   │   │
+│   │   ├── layout/        # layouts for pages
+│   │   │   ├── main.html      # standard layout
+│   │   │   └── article.html   # longform/case-study layout
+│   │   │
+│   │   ├── components/    # reusable UI components
+│   │   │   ├── nav.html           # navigation bar
+│   │   │   ├── footer.html        # footer (links, socials)
+│   │   │   ├── hero.html          # homepage hero
+│   │   │   ├── theme_toggle.html  # dark/light toggle button
+│   │   │   ├── project_card.html  # project showcase card
+│   │   │   ├── badge.html         # badge label
+│   │   │   ├── chip.html          # tag chip
+│   │   │   ├── pagination.html    # pagination controls
+│   │   │   ├── weather_chip.html  # weather snippet
+│   │   │   ├── news_card.html     # news item card
+│   │   │   ├── rss_link.html      # RSS feed link
+│   │   │   └── cookie_notice.html # cookie consent banner
+│   │   │
+│   │   ├── pages/         # page templates
+│   │   │   ├── home.html
+│   │   │   ├── about.html         # About Me page
+│   │   │   ├── projects.html
+│   │   │   ├── project_detail.html
+│   │   │   ├── skills.html
+│   │   │   ├── resume.html
+│   │   │   ├── cdfe.html          # Computer-Do-For-Me utilities
+│   │   │   ├── contact.html
+│   │   │   ├── webbabyguard.html
+│   │   │   ├── puzzle.html
+│   │   │   ├── error_403.html     # forbidden error page
+│   │   │   ├── error_404.html     # not found error page
+│   │   │   └── error_500.html     # server error page
+│   │   │
+│   │   └── seo/           # SEO & crawlers
+│   │       ├── sitemap.xml.j2
+│   │       ├── robots.txt.j2
+│   │       └── rss.xml.j2
+│   │
+│   └── static/            # static assets (CSS, JS, images)
+│       ├── css/           # global + page CSS
+│       │   ├── tokens.css     # design tokens
+│       │   ├── base.css       # resets + base styles
+│       │   ├── layout.css     # grid + layout
+│       │   ├── components.css # reusable components
+│       │   ├── pages.css      # general page tweaks
+│       │   ├── puzzle.css     # puzzle-specific styles
+│       │   └── print.css      # resume print styles
+│       │
+│       ├── js/            # javascript for interactivity
+│       │   ├── app.js         # global bootstrap + init
+│       │   ├── theme.js       # auto theme + toggle
+│       │   ├── puzzle.js      # puzzle game logic
+│       │   ├── news.js        # Webbabyguard UI
+│       │   ├── weather.js     # weather widget
+│       │   ├── metrics.js     # simple analytics
+│       │   └── effects.js     # cursor/loader effects
+│       │
+│       └── img/           # images & mascots
+│           ├── logos/             # branding logos
+│           ├── favicons/          # favicons + manifest
+│           ├── social/            # social preview images
+│           ├── illustrations/     # decorative graphics
+│           ├── mascot/            # mascot images
+│           │   ├── 403.png        # 403 error mascot
+│           │   └── 404.png        # 404 error mascot
+│
+├── tests/                 # automated tests
+│   ├── test_rss_ingest.py
+│   ├── test_weather.py
+│   ├── test_api_contracts.py
+│   └── test_puzzle_seed.py
+│
+├── .github/               # GitHub actions
+│   └── workflows/
+│       └── ci.yml         # CI pipeline (lint + tests)
+│
+└── docs/                  # documentation
+    ├── ARCHITECTURE.md    # system design
+    ├── CONTENT_GUIDE.md   # how to add content
+    ├── STYLEGUIDE.md      # styling + asset usage
+    ├── ENDPOINTS.md       # API routes docs
+    ├── COOKIES.md         # cookie handling details
+    ├── SECURITY.md        # security practices
+    └── RENDER_DEPLOY.md   # Render deployment guide

@@ -1,0 +1,57 @@
+{# app/templates/pages/projects.html #}
+{% extends "layout/article.html" %}
+
+{% block title %}Projects — {{ site_name }}{% endblock %}
+{% block og_title %}Projects — {{ site_name }}{% endblock %}
+{% block description %}Selected projects by Uchenna (webaby).{% endblock %}
+{% block og_description %}Selected projects by Uchenna (webaby).{% endblock %}
+{% block twitter_title %}Projects — {{ site_name }}{% endblock %}
+{% block twitter_description %}Selected projects by Uchenna (webaby).{% endblock %}
+
+{% block extra_head %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "Projects — {{ site_name }}",
+  "url": "{{ config['BASE_URL'] }}/projects"
+}
+</script>
+{% endblock %}
+
+{% block content %}
+<article class="container mx-auto px-4 py-8" role="article" aria-labelledby="projects-title">
+  <header class="mb-6">
+    <h1 id="projects-title" class="text-3xl md:text-4xl font-bold font-[var(--font-heading)] text-[var(--color-fg)]">
+      Projects
+    </h1>
+    <p class="text-[var(--color-fg-secondary)] mt-2">
+      Browse featured work. Click a project to view details.
+    </p>
+  </header>
+
+  {# If/when you wire a real list, render it here. This placeholder keeps page stable. #}
+  <section class="prose prose-invert max-w-none">
+    <ul class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <li class="border border-[var(--color-border)] rounded-[var(--border-radius)] p-4">
+        <h2 class="text-xl font-[var(--font-heading)] mb-2">
+          <a href="{{ url_for('pages.project_detail', project_id='luna') }}" class="hover:underline">Luna</a>
+        </h2>
+        <p class="text-[var(--color-fg-secondary)]">PyQt5 AI assistant with GUI, sensors, and modular core.</p>
+      </li>
+      <li class="border border-[var(--color-border)] rounded-[var(--border-radius)] p-4">
+        <h2 class="text-xl font-[var(--font-heading)] mb-2">
+          <a href="{{ url_for('pages.project_detail', project_id='acebot') }}" class="hover:underline">AceBot</a>
+        </h2>
+        <p class="text-[var(--color-fg-secondary)]">Arduino/ESP32/Pi home-assistant robot with motion logic.</p>
+      </li>
+      <li class="border border-[var(--color-border)] rounded-[var(--border-radius)] p-4">
+        <h2 class="text-xl font-[var(--font-heading)] mb-2">
+          <a href="{{ url_for('pages.project_detail', project_id='chains') }}" class="hover:underline">Chains</a>
+        </h2>
+        <p class="text-[var(--color-fg-secondary)]">Web3 trading AI with multi-chain sniping and risk controls.</p>
+      </li>
+    </ul>
+  </section>
+</article>
+{% endblock %}

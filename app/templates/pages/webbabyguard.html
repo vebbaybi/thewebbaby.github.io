@@ -1,0 +1,120 @@
+{% extends "layout/main.html" %} {% block title %}Webbabyguard — {{
+config['SITE_NAME'] }}{% endblock %} {% block description %}Uchenna's
+Webbabyguard feed, curating tech news and project bulletins with real-time RSS
+export.{% endblock %} {% block og_title %}Webbabyguard — {{ config['SITE_NAME']
+}}{% endblock %} {% block og_description %}Explore Uchenna's curated tech news
+and project updates, powered by AI-driven data aggregation.{% endblock %} {%
+block twitter_title %}Webbabyguard — {{ config['SITE_NAME'] }}{% endblock %} {%
+block twitter_description %}Uchenna's Webbabyguard feed, delivering tech news
+and bulletins with RSS.{% endblock %} {% block extra_head %}
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "NewsMediaOrganization",
+    "name": "Webbabyguard",
+    "description": "Uchenna's curated tech news and project bulletins feed.",
+    "url": "{{ config['BASE_URL'] }}/webbabyguard"
+  }
+</script>
+{% endblock %} {% block content %}
+<section
+  class="container mx-auto px-4 py-8"
+  role="region"
+  aria-labelledby="webbabyguard-title"
+>
+  <div class="flex items-center justify-between">
+    <h1
+      id="webbabyguard-title"
+      class="text-3xl md:text-4xl font-bold font-[var(--font-heading)] text-[var(--color-fg)]"
+    >
+      Webbabyguard
+    </h1>
+    <a
+      class="rss-inline text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] glitch"
+      href="{{ url_for('api.api_rss') }}"
+      rel="alternate"
+      type="application/rss+xml"
+      aria-label="Subscribe to Webbabyguard RSS feed"
+    >
+      RSS
+    </a>
+  </div>
+  <p class="prose prose-invert text-[var(--color-fg-secondary)] mt-2 mb-6">
+    Curated tech news and project bulletins, updated in real-time via
+    <code>scripts/build_feeds.py</code>.
+  </p>
+
+  <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+    {% for it in items %} {% set item = it if it.__class__.__name__ !=
+    'NewsItem' else it.to_dict() %}
+    <article
+      class="news-card bg-[var(--color-bg-secondary)] rounded-[var(--border-radius)] border border-[var(--color-border)] overflow-hidden interactive"
+    >
+      {% if item.image %}
+      <a
+        class="thumb block"
+        href="{{ item.url }}"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Read full article: {{ item.title }}"
+      >
+        <img
+          src="{{ item.image }}"
+          alt="{{ item.title }} thumbnail"
+          loading="lazy"
+          class="glitch"
+        />
+      </a>
+      {% endif %}
+      <div class="body p-4">
+        <header class="meta text-sm text-[var(--color-fg-secondary)] mb-2">
+          <span class="source">{{ item.source }}</span>
+          {% if item.published_at %}
+          <time datetime="{{ item.published_at }}"
+            >{{ item.published_at[:10] }}</time
+          >
+          {% endif %}
+        </header>
+        <h3 class="title text-lg font-[var(--font-heading)] mb-2">
+          {% if item.url %}
+          <a
+            href="{{ item.url }}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="link hover:text-[var(--color-accent-hover)]"
+          >
+            {{ item.title }}
+          </a>
+          {% else %} {{ item.title }} {% endif %}
+        </h3>
+        {% if item.excerpt %}
+        <p class="excerpt text-[var(--color-fg-secondary)]">
+          {{ item.excerpt|truncate(150) }}
+        </p>
+        {% endif %} {% if item.tags %}
+        <ul class="tags flex flex-wrap gap-2 mt-3">
+          {% for t in item.tags %}
+          <li>
+            <span
+              class="chip bg-[var(--color-accent)] text-[var(--color-bg)] px-2 py-1 rounded-full text-sm"
+              >{{ t }}</span
+            >
+          </li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+    </article>
+    {% else %}
+    <p class="prose prose-invert text-[var(--color-fg-secondary)]">
+      No items available.
+    </p>
+    {% endfor %}
+  </div>
+
+  {% from "components/pagination.html" import pagination %}
+  <div class="mt-8">
+    {{ pagination(page, total_pages, url_for('webbabyguard.webbabyguard')) }}
+  </div>
+</section>
+{% endblock %}

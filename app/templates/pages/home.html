@@ -1,0 +1,109 @@
+{% extends "layout/main.html" %} {% block title %}Home — {{ config['SITE_NAME']
+}}{% endblock %} {% block description %}Uchenna's portfolio, showcasing AI, data
+analysis, embedded systems, and interactive features like the Webbabyguard feed
+and sliding puzzle.{% endblock %} {% block og_title %}Home — {{
+config['SITE_NAME'] }}{% endblock %} {% block og_description %}Explore Uchenna's
+innovative work in AI, data, and embedded systems, with interactive features
+like news feeds and puzzles.{% endblock %} {% block twitter_title %}Home — {{
+config['SITE_NAME'] }}{% endblock %} {% block twitter_description %}Discover
+Uchenna's portfolio, blending AI, data, and embedded systems with interactive
+web experiences.{% endblock %} {% block extra_head %}
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "{{ config['SITE_NAME'] }}",
+    "url": "{{ config['BASE_URL'] }}",
+    "description": "Uchenna's portfolio showcasing AI, data analysis, and embedded systems projects."
+  }
+</script>
+{% endblock %} {% block content %} {% include "components/hero.html" with
+context %}
+
+<section
+  class="container mx-auto px-4 py-8"
+  role="region"
+  aria-labelledby="now-title"
+>
+  <div class="flex items-center justify-between gap-4">
+    <h2
+      id="now-title"
+      class="text-2xl md:text-3xl font-bold font-[var(--font-heading)] text-[var(--color-fg)]"
+    >
+      Now
+    </h2>
+    <a
+      class="rss-inline text-[var(--color-accent)] hover:text-[var(--color-accent-hover)] glitch"
+      href="{{ url_for('api.api_rss') }}"
+      rel="alternate"
+      type="application/rss+xml"
+      aria-label="Subscribe to RSS feed"
+      >RSS</a
+    >
+  </div>
+
+  <!-- Weather Widget -->
+  <div
+    id="weather-chip"
+    class="weather-chip bg-[var(--color-bg-secondary)] p-4 rounded-[var(--border-radius)] border border-[var(--color-border)] mt-4 interactive"
+    data-endpoint="{{ url_for('api.api_weather') }}"
+  >
+    <p>Loading weather data...</p>
+  </div>
+</section>
+
+<section
+  class="container mx-auto px-4 py-8"
+  role="region"
+  aria-labelledby="news-title"
+>
+  <div class="flex items-center justify-between">
+    <h2
+      id="news-title"
+      class="text-2xl md:text-3xl font-bold font-[var(--font-heading)] text-[var(--color-fg)]"
+    >
+      Latest News & Bulletins
+    </h2>
+    <a
+      class="btn inline-block bg-[var(--color-accent)] text-[var(--color-bg)] px-4 py-2 rounded-[var(--border-radius)] font-[var(--font-heading)] hover:bg-[var(--color-accent-hover)] hover:transform hover:-translate-y-1 transition-all glitch interactive"
+      href="{{ url_for('webbabyguard.webbabyguard') }}"
+      aria-label="View full Webbabyguard feed"
+      >Open Full Feed</a
+    >
+  </div>
+
+  <!-- News List -->
+  <div
+    id="news-list"
+    class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mt-6"
+    data-endpoint="{{ url_for('api.api_news') }}"
+    data-limit="9"
+  ></div>
+</section>
+
+<section
+  class="container mx-auto px-4 py-8"
+  role="region"
+  aria-labelledby="play-title"
+>
+  <div class="flex items-center justify-between">
+    <h2
+      id="play-title"
+      class="text-2xl md:text-3xl font-bold font-[var(--font-heading)] text-[var(--color-fg)]"
+    >
+      Play
+    </h2>
+    <a
+      class="btn inline-block bg-[var(--color-accent)] text-[var(--color-bg)] px-4 py-2 rounded-[var(--border-radius)] font-[var(--font-heading)] hover:bg-[var(--color-accent-hover)] hover:transform hover:-translate-y-1 transition-all glitch interactive"
+      href="{{ url_for('puzzle.puzzle') }}"
+      aria-label="Play the sliding puzzle game"
+      >Open Puzzle</a
+    >
+  </div>
+  <p class="prose prose-invert text-[var(--color-fg-secondary)] mt-2">
+    Test your skills with an interactive sliding puzzle, seeded from
+    <code>data/playme/manifest.json</code>.
+  </p>
+</section>
+{% endblock %} {# Do not re-add weather.js or news.js here; base.html already
+includes them #}

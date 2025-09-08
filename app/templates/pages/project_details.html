@@ -1,0 +1,53 @@
+{# app/templates/pages/project_detail.html #} {% extends "layout/article.html"
+%} {% block title %}{{ project_id }} — {{ site_name }}{% endblock %} {% block
+og_title %}{{ project_id }} — {{ site_name }}{% endblock %} {% block description
+%}Details for project “{{ project_id }}”.{% endblock %} {% block og_description
+%}Details for project “{{ project_id }}”.{% endblock %} {% block twitter_title
+%}{{ project_id }} — {{ site_name }}{% endblock %} {% block twitter_description
+%}Details for project “{{ project_id }}”.{% endblock %} {% block extra_head %}
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "CreativeWork",
+    "name": "{{ project_id }}",
+    "url": "{{ config['BASE_URL'] }}/projects/{{ project_id }}",
+    "author": {
+      "@type": "Person",
+      "name": "Uchenna"
+    }
+  }
+</script>
+{% endblock %} {% block content %}
+<article
+  class="container mx-auto px-4 py-8"
+  role="article"
+  aria-labelledby="project-title"
+>
+  <header class="mb-6">
+    <h1
+      id="project-title"
+      class="text-3xl md:text-4xl font-bold font-[var(--font-heading)] text-[var(--color-fg)]"
+    >
+      {{ project_id }}
+    </h1>
+    <p class="text-[var(--color-fg-secondary)] mt-2">
+      Detail content for this project is managed per-project. Use this slug to
+      map to data or docs.
+    </p>
+  </header>
+
+  <section class="prose prose-invert max-w-none">
+    {# Insert project-specific content via your data layer when ready. #}
+  </section>
+
+  <div class="mt-8">
+    <a
+      href="{{ url_for('pages.projects') }}"
+      class="inline-block bg-[var(--color-accent)] text-[var(--color-bg)] px-6 py-3 rounded-[var(--border-radius)] font-[var(--font-heading)] hover:bg-[var(--color-accent-hover)] hover:transform hover:-translate-y-1 transition-all"
+      aria-label="Back to all projects"
+    >
+      Back to projects
+    </a>
+  </div>
+</article>
+{% endblock %}

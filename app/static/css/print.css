@@ -1,0 +1,12 @@
+@media print {
+    body {
+        background: #fff;
+        color: #000;
+    }
+
+    nav,
+    footer,
+    .no-print {
+        display: none !important;
+    }
+}

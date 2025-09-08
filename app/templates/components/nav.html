@@ -1,0 +1,108 @@
+{# app/templates/components/nav.html (Fixed) #}
+<nav
+  class="site-nav glass"
+  role="navigation"
+  aria-label="Main navigation"
+  data-nav
+>
+  <div class="nav-inner container">
+    <!-- Brand -->
+    <a
+      class="brand"
+      href="{{ url_for('pages.home') }}"
+      aria-label="{{ config['SITE_NAME'] or 'TheWebBaby' }}"
+    >
+      <img
+        src="{{ url_for('static', filename='img/logos/logo.png') }}"
+        alt="{{ config['SITE_NAME'] }} logo"
+        class="brand-logo"
+        width="144"
+        height="40"
+        decoding="async"
+      />
+      <span class="brand-name">{{ config['SITE_NAME'] }}</span>
+    </a>
+
+    <!-- Desktop links -->
+    <ul class="nav-links nav-links--desktop" id="primary-nav-desktop">
+      {% for item in nav_items %}
+      <li>
+        <a
+          href="{{ item.href }}"
+          class="nav-link{% if request.path == item.href %} active{% endif %}"
+          {% if request.path == item.href %} aria-current="page"{% endif %}
+        >{{ item.label }}</a>
+      </li>
+      {% endfor %}
+      <li class="nav-aux">
+        <a class="rss-link" href="{{ url_for('api.api_rss') }}" rel="alternate" type="application/rss+xml">RSS</a>
+        {% include 'components/theme_toggle.html' %}
+      </li>
+    </ul>
+
+    <!-- Mobile toggle -->
+    <button class="nav-toggle" aria-controls="primary-nav-mobile" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+      <span class="nav-toggle-bar"></span>
+    </button>
+  </div>
+
+  <!-- Hover-reveal tray (desktop) / Drawer (mobile) -->
+  <div class="nav-tray" id="primary-nav-mobile" role="region" aria-label="Navigation menu" aria-hidden="true">
+    <div class="nav-tray-inner container">
+      <ul class="nav-links nav-links--tray">
+        {% for item in nav_items %}
+        <li>
+          <a
+            href="{{ item.href }}"
+            class="nav-link{% if request.path == item.href %} active{% endif %}"
+            {% if request.path == item.href %} aria-current="page"{% endif %}
+          >{{ item.label }}</a>
+        </li>
+        {% endfor %}
+        <li class="nav-aux">
+          <a class="rss-link" href="{{ url_for('api.api_rss') }}" rel="alternate" type="application/rss+xml">RSS</a>
+          {% include 'components/theme_toggle.html' %}
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<script>
+(function () {
+  const nav   = document.querySelector('[data-nav]');
+  const tray  = nav?.querySelector('.nav-tray');
+  const inner = nav?.querySelector('.nav-tray-inner');
+  const toggle = nav?.querySelector('.nav-toggle');
+
+  if (!nav || !tray || !toggle) return;
+
+  const setAria = (open) => {
+    toggle.setAttribute('aria-expanded', String(open));
+    tray.setAttribute('aria-hidden', String(!open));
+  };
+
+  /* ----- Mobile drawer only ----- */
+  const open = () => { setAria(true); tray.classList.add('is-open'); document.body.style.overflow = 'hidden'; };
+  const close = () => { setAria(false); tray.classList.remove('is-open'); document.body.style.overflow = ''; };
+
+  toggle.addEventListener('click', () => {
+    const expanded = toggle.getAttribute('aria-expanded') === 'true';
+    expanded ? close() : open();
+  });
+
+  // Close when tapping scrim
+  tray.addEventListener('click', (e) => { if (e.target === tray) close(); });
+
+  // Close when choosing a link in the drawer
+  inner?.addEventListener('click', (e) => {
+    const a = e.target.closest && e.target.closest('a');
+    if (a) close();
+  });
+
+  // ESC closes
+  window.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+})();
+</script>

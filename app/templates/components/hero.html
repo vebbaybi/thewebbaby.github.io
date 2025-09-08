@@ -1,0 +1,18 @@
+{# app/templates/components/hero.html #}
+<section class="hero">
+  <div class="hero-inner">
+    <h1 class="hero-title">{{ title }}</h1>
+    {% if subtitle %}
+      <p class="hero-subtitle">{{ subtitle }}</p>
+    {% endif %}
+    {% if ctas %}
+      <div class="hero-actions">
+        {% for c in ctas %}
+          <a class="btn {{ c.class or '' }}" href="{{ c.href }}" {% if c.external %}target="_blank" rel="noopener noreferrer"{% endif %}>
+            {{ c.label }}
+          </a>
+        {% endfor %}
+      </div>
+    {% endif %}
+  </div>
+</section>

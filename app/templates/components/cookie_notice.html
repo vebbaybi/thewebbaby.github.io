@@ -1,0 +1,54 @@
+<div
+  id="cookie-notice"
+  class="cookie-notice fixed bottom-4 left-4 right-4 bg-[var(--color-bg-secondary)] border border-[var(--color-border)] p-4 rounded-[var(--border-radius)] shadow-lg max-w-md mx-auto z-50 interactive"
+  role="dialog"
+  aria-live="polite"
+  aria-label="Cookie consent notice"
+>
+  <div class="cookie-inner">
+    <p class="prose prose-invert text-[var(--color-fg-secondary)]">
+      We use a single cookie to save your theme preference. No tracking, just a
+      better experience.
+    </p>
+    <div class="actions mt-4 flex justify-end">
+      <button
+        id="cookie-accept"
+        class="btn bg-[var(--color-accent)] text-[var(--color-bg)] px-4 py-2 rounded-[var(--border-radius)] font-[var(--font-heading)] hover:bg-[var(--color-accent-hover)] hover:transform hover:-translate-y-1 transition-all glitch"
+        aria-label="Accept cookie usage"
+      >
+        OK
+      </button>
+    </div>
+  </div>
+</div>
+<script>
+  (function () {
+    const k = "cookie_consent";
+    function getCookie(name) {
+      const m = document.cookie.match(
+        `(?:^|; )${name.replace(/([$?*|{}\]\\^])/g, "\\$1")}=([^;]*)`
+      );
+      return m ? decodeURIComponent(m[1]) : "";
+    }
+    function setCookie(name, value, days) {
+      const d = new Date();
+      d.setTime(d.getTime() + days * 24 * 60 * 60 * 1000);
+      document.cookie = `${name}=${encodeURIComponent(
+        value
+      )};expires=${d.toUTCString()};path=/;samesite=Lax;secure`;
+    }
+    const el = document.getElementById("cookie-notice");
+    const btn = document.getElementById("cookie-accept");
+    if (!el || !btn) return;
+    if (getCookie(k) === "1") {
+      el.remove();
+      return;
+    }
+    el.classList.add("visible");
+    btn.addEventListener("click", () => {
+      setCookie(k, "1", 365);
+      el.classList.remove("visible");
+      setTimeout(() => el.remove(), 300);
+    });
+  })();
+</script>

@@ -1,0 +1,21 @@
+{# app/templates/components/project_card.html #} {% macro project_card(p) -%}
+<article class="project-card">
+  <a class="thumb" href="{{ p.href }}">
+    {% if p.image %}
+    <img src="{{ p.image }}" alt="" loading="lazy" />
+    {% endif %}
+  </a>
+  <div class="body">
+    <h3 class="title"><a href="{{ p.href }}">{{ p.title }}</a></h3>
+    {% if p.description %}
+    <p class="desc">{{ p.description }}</p>
+    {% endif %} {% if p.tags %}
+    <ul class="tags">
+      {% for t in p.tags %}
+      <li>{% from 'components/chip.html' import chip %}{{ chip(t) }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </div>
+</article>
+{%- endmacro %}

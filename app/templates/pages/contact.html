@@ -1,0 +1,11 @@
+{% extends "layout/main.html" %}
+
+{% block title %}Contact — {{ site_name }}{% endblock %}
+{% block og_title %}Contact — {{ site_name }}{% endblock %}
+
+{% block content %}
+  <section class="prose prose-invert max-w-3xl mx-auto">
+    <h1>Contact</h1>
+    <p>Email: <a href="mailto:{{ config['CONTACT_EMAIL'] }}">{{ config['CONTACT_EMAIL'] }}</a></p>
+  </section>
+{% endblock %}

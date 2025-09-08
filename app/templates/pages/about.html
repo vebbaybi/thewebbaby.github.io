@@ -1,0 +1,124 @@
+{% extends "layout/article.html" %} {% block title %}About Uchenna — {{
+config['SITE_NAME'] }}{% endblock %} {% block description %}Learn about Uchenna,
+a Computer Scientist specializing in AI, data analysis, embedded systems, and
+collaborative technology solutions.{% endblock %} {% block og_title %}About
+Uchenna — {{ config['SITE_NAME'] }}{% endblock %} {% block og_description
+%}Discover Uchenna's journey in Computer Science, blending AI, data analysis,
+and embedded systems to create innovative solutions.{% endblock %} {% block
+twitter_title %}About Uchenna — {{ config['SITE_NAME'] }}{% endblock %} {% block
+twitter_description %}Uchenna's story as a Computer Scientist exploring AI,
+data, and embedded systems for a collaborative tech future.{% endblock %} {%
+block extra_head %}
+<!-- Structured Data for Person -->
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Uchenna",
+    "jobTitle": "Computer Scientist",
+    "description": "Specializing in AI, data analysis, and embedded systems, Uchenna builds collaborative tech solutions.",
+    "url": "{{ config['BASE_URL'] }}/about",
+    "sameAs": [
+      "https://twitter.com/yourhandle",
+      "https://linkedin.com/in/yourprofile",
+      "https://github.com/yourusername"
+    ]
+  }
+</script>
+{% endblock %} {% block content %}
+<article class="container mx-auto px-4 py-8" role="article">
+  <!-- Profile Header -->
+  <header class="flex flex-col md:flex-row items-center mb-8">
+    <div class="relative w-32 h-32 md:w-48 md:h-48 mb-4 md:mb-0 md:mr-6">
+      <img
+        src="{{ url_for('static', filename='img/mascot/mascot.png') }}"
+        alt="Uchenna's profile avatar"
+        class="rounded-full border-2 border-[var(--color-accent)] glitch interactive"
+        data-glitch="true"
+      />
+    </div>
+    <div>
+      <h1
+        class="text-3xl md:text-4xl font-bold font-[var(--font-heading)] text-[var(--color-fg)] mb-2"
+      >
+        About Uchenna
+      </h1>
+      <p class="text-lg text-[var(--color-fg-secondary)]">
+        Computer Scientist | AI & Data Explorer | Embedded Systems Developer
+      </p>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <section class="prose prose-invert max-w-none text-[var(--color-fg)]">
+    <p>
+      My name is Uchenna, and I’m a Computer Scientist with a Bachelor’s degree
+      in Computer Science, driven by a passion for solving real-world problems
+      through self-directed learning and practical application.
+    </p>
+    <p>
+      I see technology as a collaborative partner, not a replacement for human
+      effort—much like a shovel that aids a laborer but cannot dig on its own.
+      This philosophy shapes my work, where I focus on building expertise in two
+      key areas: <strong>Data & Artificial Intelligence</strong> and
+      <strong>Embedded Systems & Hardware</strong>.
+    </p>
+
+    <h2 class="text-2xl font-[var(--font-heading)] mt-6 mb-4">My Expertise</h2>
+    <ul class="list-disc pl-6 mb-6">
+      <li>
+        <strong>Data & AI</strong>: I dive into datasets to uncover stories,
+        using techniques like classification and pattern recognition to build
+        intelligent systems that enhance human decision-making.
+      </li>
+      <li>
+        <strong>Embedded Systems</strong>: I create tangible solutions with
+        Raspberry Pi and Arduino, from custom robotics to smart sensors,
+        bridging software and the physical world.
+      </li>
+    </ul>
+
+    <h2 class="text-2xl font-[var(--font-heading)] mt-6 mb-4">My Vision</h2>
+    <p>
+      I aim to merge data analysis and embedded systems to create integrated
+      solutions—like a home surveillance system that uses AI for biometric
+      matching, reducing uncertainty and empowering confident action. My goal is
+      a world where humans and machines share roles for smarter, more effective
+      outcomes.
+    </p>
+
+    <h2 class="text-2xl font-[var(--font-heading)] mt-6 mb-4">My Journey</h2>
+    <p>
+      I’m a work in progress, constantly learning and adapting. My curiosity and
+      diverse skill set allow me to tackle challenges, quickly mastering new
+      tools and applying them where needed. As a Computer Scientist by training
+      and a self-taught developer in practice, I’m an explorer building a
+      collaborative future.
+    </p>
+
+    <!-- Call to Action -->
+    <div class="mt-8">
+      <a
+        href="{{ url_for('pages.projects') }}"
+        class="inline-block bg-[var(--color-accent)] text-[var(--color-bg)] px-6 py-3 rounded-[var(--border-radius)] font-[var(--font-heading)] hover:bg-[var(--color-accent-hover)] hover:transform hover:-translate-y-1 transition-all glitch interactive"
+        aria-label="Explore Uchenna's projects"
+      >
+        Explore My Projects
+      </a>
+    </div>
+  </section>
+</article>
+{% endblock %} {% block extra_js %}
+<script>
+  // Initialize glitch effect for profile image
+  document.addEventListener("DOMContentLoaded", () => {
+    const glitchElements = document.querySelectorAll('[data-glitch="true"]');
+    glitchElements.forEach((el) => {
+      el.addEventListener("mouseenter", () => {
+        el.classList.add("glitch");
+        setTimeout(() => el.classList.remove("glitch"), 300);
+      });
+    });
+  });
+</script>
+{% endblock %}

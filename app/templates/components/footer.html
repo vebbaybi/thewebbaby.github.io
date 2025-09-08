@@ -1,0 +1,26 @@
+{# app/templates/components/footer.html #}
+<footer class="site-footer">
+  <div class="footer-inner">
+    <div class="left">
+      <p>&copy; <span id="y"></span> {{ site_name }}. All rights reserved.</p>
+    </div>
+    <ul class="right">
+      <li><a href="{{ url_for('pages.about') }}">About</a></li>
+      <li><a href="{{ url_for('pages.projects') }}">Projects</a></li>
+      <li><a href="{{ url_for('pages.contact') }}">Contact</a></li>
+      <li><a href="{{ url_for('assets.sitemap') }}">Sitemap</a></li>
+      <li><a href="{{ url_for('assets.robots') }}">Robots</a></li>
+      <li>
+        <a
+          href="{{ url_for('api.api_rss') }}"
+          rel="alternate"
+          type="application/rss+xml"
+          >RSS</a
+        >
+      </li>
+    </ul>
+  </div>
+  <script>
+    document.getElementById("y").textContent = new Date().getFullYear();
+  </script>
+</footer>

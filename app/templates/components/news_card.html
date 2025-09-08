@@ -1,0 +1,40 @@
+{# app/templates/components/news_card.html #} {% macro news_card(item) -%}
+<article class="news-card">
+  {% if item.image %}
+  <a
+    class="thumb"
+    href="{{ item.url }}"
+    target="_blank"
+    rel="noopener noreferrer"
+  >
+    <img src="{{ item.image }}" alt="" loading="lazy" />
+  </a>
+  {% endif %}
+  <div class="body">
+    <header class="meta">
+      <span class="source">{{ item.source }}</span>
+      {% if item.published_at %}
+      <time datetime="{{ item.published_at }}"
+        >{{ item.published_at[:10] }}</time
+      >
+      {% endif %}
+    </header>
+    <h3 class="title">
+      {% if item.url %}
+      <a href="{{ item.url }}" target="_blank" rel="noopener noreferrer"
+        >{{ item.title }}</a
+      >
+      {% else %} {{ item.title }} {% endif %}
+    </h3>
+    {% if item.excerpt %}
+    <p class="excerpt">{{ item.excerpt }}</p>
+    {% endif %} {% if item.tags %}
+    <ul class="tags">
+      {% for t in item.tags %}
+      <li>{% from 'components/chip.html' import chip %}{{ chip(t) }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+  </div>
+</article>
+{%- endmacro %}

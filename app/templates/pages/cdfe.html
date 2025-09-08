@@ -1,0 +1,127 @@
+{% extends "layout/main.html" %} {% block title %}CDFE Utilities — {{
+config['SITE_NAME'] }}{% endblock %} {% block description %}Explore Uchenna's
+Computer-Do-For-Me (CDFE) utilities, including news builders, image optimizers,
+and live APIs for weather and RSS.{% endblock %} {% block og_title %}CDFE
+Utilities — {{ config['SITE_NAME'] }}{% endblock %} {% block og_description
+%}Discover Uchenna's practical tools for automating tasks, from news feeds to
+image optimization, powered by Python and APIs.{% endblock %} {% block
+twitter_title %}CDFE Utilities — {{ config['SITE_NAME'] }}{% endblock %} {%
+block twitter_description %}Uchenna's CDFE utilities automate tasks with tools
+like news builders, image optimizers, and live APIs.{% endblock %} {% block
+extra_head %}
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "CDFE Utilities",
+    "description": "Collection of automation tools by Uchenna, including news feed builders, image optimizers, and APIs.",
+    "url": "{{ config['BASE_URL'] }}/cdfe"
+  }
+</script>
+{% endblock %} {% block content %}
+<section
+  class="container mx-auto px-4 py-8"
+  role="region"
+  aria-labelledby="cdfe-title"
+>
+  <h1
+    id="cdfe-title"
+    class="text-3xl md:text-4xl font-bold font-[var(--font-heading)] text-[var(--color-fg)] mb-6"
+  >
+    Computer-Do-For-Me (CDFE) Utilities
+  </h1>
+  <p class="prose prose-invert text-[var(--color-fg-secondary)] mb-6">
+    Practical tools to automate tasks, reflecting my philosophy of technology as
+    a collaborative partner. Try the live weather widget or explore the scripts
+    powering this site.
+  </p>
+
+  <!-- Weather Widget Demo -->
+  <div class="mb-8 interactive">
+    <h2 class="text-2xl font-[var(--font-heading)] mb-4">Live Weather Demo</h2>
+    <div
+      id="weather-widget"
+      class="weather-chip bg-[var(--color-bg-secondary)] p-4 rounded-[var(--border-radius)] border border-[var(--color-border)]"
+    >
+      <p>Loading weather data...</p>
+    </div>
+  </div>
+
+  <!-- Utilities Grid -->
+  <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+    <article
+      class="project-card bg-[var(--color-bg-secondary)] p-4 rounded-[var(--border-radius)] border border-[var(--color-border)]"
+    >
+      <h3 class="text-xl font-[var(--font-heading)] mb-2">News Builder</h3>
+      <p class="text-[var(--color-fg-secondary)]">
+        Fetches and normalizes RSS feeds to generate <code>news.json</code> and
+        <code>rss.xml</code>.
+      </p>
+      <p class="mt-2"><code>scripts/build_feeds.py</code></p>
+    </article>
+    <article
+      class="project-card bg-[var(--color-bg-secondary)] p-4 rounded-[var(--border-radius)] border border-[var(--color-border)]"
+    >
+      <h3 class="text-xl font-[var(--font-heading)] mb-2">Image Optimizer</h3>
+      <p class="text-[var(--color-fg-secondary)]">
+        Compresses and converts images for fast loading (e.g., puzzle images,
+        mascots).
+      </p>
+      <p class="mt-2"><code>scripts/optimize_images.py</code></p>
+    </article>
+    <article
+      class="project-card bg-[var(--color-bg-secondary)] p-4 rounded-[var(--border-radius)] border border-[var(--color-border)]"
+    >
+      <h3 class="text-xl font-[var(--font-heading)] mb-2">Content Validator</h3>
+      <p class="text-[var(--color-fg-secondary)]">
+        Lints <code>bulletins.yaml</code> and validates schemas for consistency.
+      </p>
+      <p class="mt-2"><code>scripts/validate_content.py</code></p>
+    </article>
+    <article
+      class="project-card bg-[var(--color-bg-secondary)] p-4 rounded-[var(--border-radius)] border border-[var(--color-border)]"
+    >
+      <h3 class="text-xl font-[var(--font-heading)] mb-2">APIs</h3>
+      <p class="text-[var(--color-fg-secondary)]">
+        Live endpoints for dynamic content and site health.
+      </p>
+      <ul class="list-disc pl-6 mt-2">
+        <li>
+          <a href="{{ url_for('api.api_news') }}" class="link">/api/news</a>
+        </li>
+        <li>
+          <a href="{{ url_for('api.api_weather') }}" class="link"
+            >/api/weather</a
+          >
+        </li>
+        <li>
+          <a href="{{ url_for('api.api_rss') }}" class="link">/api/rss</a>
+        </li>
+        <li>
+          <a href="{{ url_for('api.health') }}" class="link">/api/health</a>
+        </li>
+      </ul>
+    </article>
+  </div>
+</section>
+{% endblock %} {% block extra_js %}
+<script>
+  // Fetch weather data for widget
+  document.addEventListener("DOMContentLoaded", () => {
+    fetch('{{ url_for("api.api_weather") }}')
+      .then((response) => response.json())
+      .then((data) => {
+        const widget = document.getElementById("weather-widget");
+        widget.innerHTML = `
+            <p class="text-[var(--color-fg)]">
+              ${data.city}: ${data.temperature}°C, ${data.description}
+            </p>
+          `;
+      })
+      .catch(() => {
+        document.getElementById("weather-widget").innerHTML =
+          "<p>Weather data unavailable.</p>";
+      });
+  });
+</script>
+{% endblock %}
